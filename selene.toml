@@ -1,0 +1,2 @@
+std = "roblox"
+echo -e "[[files]]\nstd = \"roblox\"" >> /e:/Dragon\ Blox\ Sparking\ Unleashed/Roblox\ Project\ Files/selene.toml
