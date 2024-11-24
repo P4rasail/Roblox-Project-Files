@@ -12,6 +12,7 @@ local Signature = {}
 function Signature:Function([Args])
     -- Explanation of function
 end
+try
 
 
 -- Example Usage:
