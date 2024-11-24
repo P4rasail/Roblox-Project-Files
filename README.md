@@ -125,5 +125,3 @@ Contributions are welcome! Feel free to submit pull requests or open issues for 
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](https://github.com/P4rasail/Roblox-Project-Files/blob/main/LICENSE) file for details.
-
-You can copy and paste this polished version into your `README.md` file.
