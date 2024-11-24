@@ -1,53 +1,131 @@
-# Roblox-Project-Files
+
+
+```markdown
+# Roblox DBZ Game Framework
 
 ## Overview
-This repository contains various ModuleScripts used in a Roblox project.
 
-## ModuleScripts
+This repository is a comprehensive framework for a Roblox-based Dragon Ball Z game, designed with modularity and scalability in mind. The framework is written in Luau, Roblox’s scripting language, and offers a robust API for developers to manage game systems, character interactions, and gameplay mechanics.
 
-### Indexes ModuleScript
-**File:** [init.lua](https://github.com/P4rasail/Roblox-Project-Files/blob/main/src/ReplicatedStorage/Indexes/init.lua)
-- `Indexes:OnLoad(Func)`
-- `Indexes:Load()`
+The primary focus of this project is to provide developers with a foundation to build an immersive and feature-rich game, leveraging pre-built modules for rendering, combat, input handling, and more.
 
-### GameLoader ModuleScript
-**File:** [Client.lua](https://github.com/P4rasail/Roblox-Project-Files/blob/main/src/ReplicatedStorage/Modules/Systems/GameLoader/Client.lua)
-- This script is a function that loads the environment for the game.
+## Features
 
-### RenderService ModuleScript
-**File:** [RenderService.lua](https://github.com/P4rasail/Roblox-Project-Files/blob/main/src/ReplicatedStorage/Modules/GameSystems/RenderService.lua)
-- `RenderService:BindHair(Char:Model, HairType, Form)`
-- `RenderService:ShiftFlight(Char:Model, Options)`
-- `RenderService:Transparency(Char:Model, Time)`
-- `RenderService:Afterimage(Char:Model, Time)`
-- `RenderService:Dash(Char:Model)`
-- `RenderService:HitEffect(HRP:Model, Options)`
-- `RenderService:Resize(Part2:Instance, Size:Vector3)`
+- Modular Architecture: Each system is encapsulated in its own module for easy maintenance and scalability.
+- Customizable Systems: Includes modules for camera management, combat mechanics, NPC behavior, and more.
+- Developer-Friendly: Well-documented API and examples for integrating custom features.
+- Optimized Performance: Designed with efficiency and scalability in mind to handle complex game scenarios.
 
-### AnimManager ModuleScript
-**File:** [AnimManager.lua](https://github.com/P4rasail/Roblox-Project-Files/blob/main/src/ReplicatedStorage/Modules/Systems/AnimManager.lua)
-- `AnimManager:createConstructor(Animator:Animator)`
-- `AnimManager:StopAnim(Constructor:AnimObject, animName:AnimSearch, playSettings:PlaySettings)`
-- `AnimManager:PlayAnim(Constructor:AnimObject, animName:AnimSearch, playSettings:PlaySettings)`
-- `AnimManager:GetAnims(animName:AnimSearch)`
-- `AnimManager:FindAnim(Constructor:AnimObject, ID:string)`
+## Directory Structure
 
-### Data ModuleScript
-**File:** [init.lua](https://github.com/P4rasail/Roblox-Project-Files/blob/main/src/ServerStorage/Modules/Configs/Data/init.lua)
-- This script handles loading and managing data modules.
+```
+src/
+├── ReplicatedStorage/
+│   ├── Indexes/
+│   │   └── init.lua
+│   ├── Modules/
+│   │   ├── Systems/
+│   │   │   ├── CameraManager/
+│   │   │   │   └── init.lua
+│   │   │   ├── CombatService/
+│   │   │   │   └── init.lua
+│   │   │   ├── GameLoader/
+│   │   │   │   └── init.lua
+│   │   │   ├── InputHandler/
+│   │   │   │   └── init.lua
+│   │   │   ├── CharacterManager/
+│   │   │   │   └── init.lua
+│   │   │   ├── NPCHandler/
+│   │   │   │   └── init.lua
+│   │   │   └── ...
+│   └── ...
+└── ...
+```
 
-### Signal ModuleScript
-**File:** [init.lua](https://github.com/P4rasail/Roblox-Project-Files/blob/main/src/ReplicatedStorage/Modules/Util/Signal/init.lua)
-- `Signal:HookObject(Object:Instance, Index)`
+## Modules and Their Functions
 
-## Installation
-Steps on how to install and set up your project.
+### Indexes
 
-## Usage
-Instructions on how to use your project.
+- **Path:** src/ReplicatedStorage/Indexes/init.lua
+- **Description:** Manages and provides indexed references to shared resources across the game framework.
+- **Key Functionality:**
+  - Resource lookups and cross-module dependencies.
 
-## Contributing
-Guidelines for contributing to your project.
+### CameraManager
+
+- **Path:** src/ReplicatedStorage/Modules/Systems/CameraManager/init.lua
+- **Description:** Handles camera setup, transitions, and advanced effects.
+- **Key Features:**
+  - Connects custom camera objects to instances.
+  - Implements cinematic and dynamic camera movements.
+
+### CameraObject
+
+- **Path:** src/ReplicatedStorage/Modules/Systems/CameraManager/CameraObject/init.lua
+- **Description:** Customizable camera behaviors such as zoom, locking, and shake effects.
+- **Key Features:**
+  - Smooth zoom transitions.
+  - Lock-on and target focus.
+
+### CombatService
+
+- **Path:** src/ReplicatedStorage/Modules/GameSystems/CombatService/init.lua
+- **Description:** Implements combat logic, managing combos, stuns, and debuffs.
+- **Key Features:**
+  - Apply and manage stun effects.
+  - Track and reset combo states.
+
+### GameLoader
+
+- **Path:** src/ReplicatedStorage/Modules/Systems/GameLoader/init.lua
+- **Description:** Handles game initialization, asset loading, and dependency setup.
+- **Key Features:**
+  - Prepares assets and systems for gameplay.
+
+### InputHandler
+
+- **Path:** src/ReplicatedStorage/Modules/Systems/InputHandler/init.lua
+- **Description:** Processes and routes player input to appropriate game systems.
+- **Key Features:**
+  - Custom keybindings.
+  - Context-sensitive input actions.
+
+### CharacterManager
+
+- **Path:** src/ReplicatedStorage/Modules/Systems/CharacterManager/init.lua
+- **Description:** Manages player and NPC characters, including spawning and state management.
+- **Key Features:**
+  - Health and energy tracking.
+  - Item equipping.
+
+### NPCHandler
+
+- **Path:** src/ReplicatedStorage/Modules/Systems/NPCHandler/init.lua
+- **Description:** Controls NPC behavior and interactions.
+- **Key Features:**
+  - AI routines and animations.
+  - Configurable spawning and dialogue systems.
+
+## Getting Started
+
+1. Clone the Repository:
+
+```sh
+git clone https://github.com/P4rasail/Roblox-Project-Files.git
+```
+
+2. Set Up in Roblox Studio:
+- Import the src folder into your Roblox Studio project.
+- Ensure all dependencies are correctly referenced within ReplicatedStorage.
+
+3. Run the Game:
+- Test modules individually or run the full game for debugging.
+
+## Contribution
+
+Contributions are welcome! Feel free to submit pull requests or open issues for improvements and new features.
 
 ## License
-Include the license for your project.
+
+This project is licensed under the MIT License. See the LICENSE file for details.
+```
