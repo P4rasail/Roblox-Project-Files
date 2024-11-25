@@ -127,14 +127,14 @@ Indexes:OnLoad(function()
 		if not InputData.ActionsDone then
 			InputData.ActionsDone = {}
 		end
-		for i,v in InputData do
+		for i,v in pairs(InputData) do
 			if not v.Enacted then
 				v.Enacted = {}
 			end
 		end
 		--InputHandler.Configs
 		local NotHolding = {}
-		for e,x in Configs do
+		for e,x in pairs(Configs) do
 			
 
 			--print("TESTING THE NUTS OF ",x.Action)
@@ -166,7 +166,7 @@ Indexes:OnLoad(function()
 					end
 				end
 				
-				for i,v in Conditionals do
+				for i,v in pairs(Conditionals) do
 					local Type = v.Type
 					if not Type then continue end
 					if typeof(Type) == "string" then
@@ -180,7 +180,7 @@ Indexes:OnLoad(function()
 					local Object = v.Object or "CharacterManager"
 					if not Target then continue end
 					local OleV = v
-					for i,v in Target do
+					for i,v in pairs(Target) do
 						if not Valid2 then break end
 						local Targ
 						if v == "CurrentUser" then
@@ -237,7 +237,7 @@ Valid2 = OleV.Not and not Valid2 or Valid2
 		if #Entries == 0 then
 			table.clear(ActionsDone)
 			return end
-		for i,v in ActionsDone do
+		for i,v in pairs(ActionsDone) do
 			local Found
 			local Holdable
 
@@ -267,7 +267,7 @@ Valid2 = OleV.Not and not Valid2 or Valid2
 			return Priority > Priority2
 		end)
 		--print(Entries)
-		for i,v in Entries do
+		for i,v in pairs(Entries) do
 			--print(v.Action)
 			table.insert(InputData.ActionsDone,v.Action)
 			ActionsDone[v.Action] = true
@@ -297,7 +297,7 @@ Valid2 = OleV.Not and not Valid2 or Valid2
 
 		--print(AtOnce)
 		--print(InputHandler.Funcs)
-		for i,v in InputHandler.Funcs do
+		for i,v in pairs(InputHandler.Funcs) do
 			task.spawn(function()
 				v.Call(Input,Add)
 			end)
@@ -308,7 +308,7 @@ Valid2 = OleV.Not and not Valid2 or Valid2
 			if Info then
 				Info = table.clone(Info)
 				local Valid = true
-				for i,v in InputHandler.CurrentInputs do
+				for i,v in pairs(InputHandler.CurrentInputs) do
 					if v == Info then
 						Valid = false
 
@@ -442,7 +442,7 @@ if not InputHandler.Running then
 				end
 			end
 		end
-		for i,v in script:WaitForChild("InputMappings"):GetChildren() do
+		for i,v in pairs(script:WaitForChild("InputMappings"):GetChildren()) do
 			Added(v)
 		end
 		script.InputMappings.ChildAdded:Connect(Added)
@@ -452,7 +452,7 @@ if not InputHandler.Running then
 		repeat task.wait() 
 		
 		until Indexes.Modules.Configs.Inputs
-		for i,v in Indexes.Modules.Configs.Inputs:GetChildren() do
+		for i,v in pairs(Indexes.Modules.Configs.Inputs:GetChildren()) do
 			local Clone = v:Clone()
 			Clone.Parent = script.InputMappings
 			

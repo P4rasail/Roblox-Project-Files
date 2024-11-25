@@ -2,7 +2,8 @@
     "robloxLsp.diagnostics.globals": [
         "CharConfig",
         "CharConfig",
-        "Content"
+        "Content",
+        "Input"
     ],
     "CodeGPT.apiKey": "CodeGPT Plus Beta"
 }

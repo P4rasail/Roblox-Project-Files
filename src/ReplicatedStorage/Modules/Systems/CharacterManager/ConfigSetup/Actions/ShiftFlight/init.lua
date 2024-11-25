@@ -40,6 +40,9 @@ Tab.Func = function(CharConfig,Options)
 		end)
 		print("Done")
 		if not CharConfig.ShiftFlight then
+			CharConfig.Data.CharStats.ShiftFlight = false
+			CharConfig.ShiftFlight = false
+			CharConfig.ShiftCooldown = os.clock()  + .3
 			return
 		end
 		
