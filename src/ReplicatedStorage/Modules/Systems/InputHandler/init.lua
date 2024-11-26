@@ -115,6 +115,7 @@ local ValidifyInput = function(InputInfo,Entries)
 end
 
 Indexes:OnLoad(function()
+	
 	--print("THERE")
 	local AtOnce = 0
 	function InputHandler:Verify(InputData,CharConfig,Configs,ActionsDone)
@@ -448,10 +449,12 @@ if not InputHandler.Running then
 		script.InputMappings.ChildAdded:Connect(Added)
 		script:WaitForChild("Press").Event:Connect(function()
 			InputHandler:Verify(InputHandler.CurrentInputs,InputHandler.CharConfig,InputHandler.Configs,InputHandler.ActionsDone)
-		end)
+		end)		
 		repeat task.wait() 
 		
 		until Indexes.Modules.Configs.Inputs
+		
+		
 		for i,v in pairs(Indexes.Modules.Configs.Inputs:GetChildren()) do
 			local Clone = v:Clone()
 			Clone.Parent = script.InputMappings
