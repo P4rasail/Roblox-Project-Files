@@ -105,17 +105,22 @@ local function ParentConnected()
 					if CameraObject.ShiftLock then
 						UserInputService.MouseBehavior = Enum.MouseBehavior.LockCenter
 					else
+						if not CameraObject.HoldingDown then
 						UserInputService.MouseBehavior = Enum.MouseBehavior.Default
+						end
+						end
 					end
 				end
-			end
+		
 		end))
 		table.insert(CameraObject.Events,UserInputService.InputEnded:Connect(function(input)
 			GameSettings = SetGameSettings()
 			if input.UserInputType == Enum.UserInputType.MouseButton2 then
 				CameraObject.HoldingDown = false
+				if not CameraObject.ShiftLock then
 				UserInputService.MouseBehavior = Enum.MouseBehavior.Default
-			end
+				end
+				end
 		end))
 		local OldTime = os.clock()
 		

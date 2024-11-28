@@ -220,6 +220,7 @@ Valid2 = OleV.Not and not Valid2 or Valid2
 			elseif Result ~= 2 and x.Holdable then
 				table.insert(NotHolding,x)
 			end
+			
 		end
 		for i,v in NotHolding do
 			local Found = table.find(InputData.ActionsDone,v.Action)

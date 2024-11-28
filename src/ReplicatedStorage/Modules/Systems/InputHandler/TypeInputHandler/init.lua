@@ -4,7 +4,8 @@ local TypeInputHandler = {
 
 local Conditionals = require(script:WaitForChild("Conditionals"))
 
-function CheckAlign(InputData,TypeEntry,EntryID,Holdable)
+function CheckAlign(InputData,TypeEntry,EntryID,Holdable,Config)
+	Config = Config or {}
 	
 	if typeof(TypeEntry.Data.Platform) == "nil" then return nil,{} end
 	--print(TypeEntry)
@@ -18,7 +19,8 @@ function CheckAlign(InputData,TypeEntry,EntryID,Holdable)
 	local TabPressed = TypeInputHandler.Pressed[EntryID]
 local EnactedPressed = false
 	for i,Input in pairs(InputData) do
-		if table.find(Input.Enacted,EntryID) then
+		
+		if table.find(Input.Enacted,EntryID) and not Config.MultiKeyActivation then
 			EnactedPressed = true
 			if Holdable then 
 				--print(EntryID) 
@@ -87,8 +89,9 @@ return false,{}
 end
 
 
-function TypeInputHandler:Check(InputData,TypeEntries,ID,Holdable)
+function TypeInputHandler:Check(InputData,TypeEntries,ID,Holdable,Config)
 	Holdable = Holdable or TypeEntries.Holdable
+	local OldEntries = TypeEntries
 	if TypeEntries.TypeInputs then
 		TypeEntries = TypeEntries.TypeInputs
 	end
@@ -104,9 +107,13 @@ function TypeInputHandler:Check(InputData,TypeEntries,ID,Holdable)
 			end
 		end
 	end
+	Config = Config or {}
+	if OldEntries.MultiKeyActivation then
+		Config.MultiKeyActivation = true
+	end
 	if not TypeEntries[1] then
 		print(InputData,TypeEntries,ID,Holdable)
-		return CheckAlign(InputData,TypeEntries,ID,Holdable)
+		return CheckAlign(InputData,TypeEntries,ID,Holdable,Config)
 	else
 		local OliveBranch = false
 		
@@ -115,7 +122,7 @@ function TypeInputHandler:Check(InputData,TypeEntries,ID,Holdable)
 			local v = TypeEntries[i]
 			
 			if v[1] then
-				TempBranch,TempUsed = TypeInputHandler:Check(InputData,v,ID)
+				TempBranch,TempUsed = TypeInputHandler:Check(InputData,v,ID,nil,Config)
 				--print(InputData)
 				--print(TempBranch)
 				if TempBranch and TempBranch ~= 2 then
@@ -130,7 +137,7 @@ function TypeInputHandler:Check(InputData,TypeEntries,ID,Holdable)
 				if v.ConditionalType == "Or" then
 					if OliveBranch then return true,InputsUsed end
 				end
-				TempBranch,TempUsed = CheckAlign(InputData,v,ID,Holdable)
+				TempBranch,TempUsed = CheckAlign(InputData,v,ID,Holdable,Config)
 				if ID == "Flight" then
 				--print(InputData,v,TempBranch,#InputData)
 				end

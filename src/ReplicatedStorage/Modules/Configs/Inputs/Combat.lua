@@ -6,6 +6,7 @@ local Config = {
 				Data = _G.Enums.Key.MouseButton1
 			},
 		},
+		MultiKeyActivation = true,
 		Action = "Hit",
 		Priority = 1,
 		Args = {
@@ -21,6 +22,7 @@ local Config = {
 				Data = _G.Enums.Key.MouseButton2
 			},
 		},
+		MultiKeyActivation = true,
 		Action = "Hit",
 		Priority = 1,
 		Args = {
