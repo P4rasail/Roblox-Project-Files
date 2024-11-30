@@ -7,8 +7,8 @@ local M1 = {
 M1.Func = function(HitTab,CharConfig,Options)
 	local HitList = {}
 	--if game:GetService("RunService"):IsServer() then
-	CharConfig.Data.CharStats.Debounces.Hit = os.clock() + .4
-	CharConfig.Data.CharStats.Debounces.M2 = os.clock() + .4
+	CharConfig.Data.CharStats.Debounces.Hit = os.clock() + .25
+	CharConfig.Data.CharStats.Debounces.M2 = os.clock() + .25
 		_G.Modules.GameSystems.CombatService:AddCombatVal(CharConfig,"M2",{})
 	--end
 	if CharConfig.PlayerServer then  
@@ -21,13 +21,13 @@ M1.Func = function(HitTab,CharConfig,Options)
 		local Mover = CharConfig.Mover
 		local AnimManager =  _G.Modules.Systems.AnimManager
 		HitTab.Lunge(CharConfig,{
-			BaseVel = 140,
+			BaseVel = 110,
 			VelocityTrack = 1/1.4,
-			TimeTake = .5
+			TimeTake = .2
 		})
 		local HitboxTimes,Anim = HitTab.PlayAnim(CharConfig,{
 			Type = "M2",
-			Speed = 1.9
+			Speed = 3
 		})
 	local Controller=  CharConfig.Controller
 	HitTab.HitDetect(CharConfig,{

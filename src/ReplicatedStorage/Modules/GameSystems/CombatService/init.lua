@@ -138,7 +138,7 @@ function CombatService:Stun(Mod:Model,Options)
 			Delta = os.clock() - OldTime
 			OldTime = os.clock()
 			if Options.TimeLast then
-			Vel += (Aim - Vel) * (.12/Options.TimeLast)^(1-Delta)
+			Vel += (Aim - Vel) * (.3/Options.TimeLast)^(1-Delta)
 				end
 			MoverManager:add(Mover,"Vel","Stun",Vel,10)
 			MoverManager:add(Mover,"Gyro","Stun",Dir,10)

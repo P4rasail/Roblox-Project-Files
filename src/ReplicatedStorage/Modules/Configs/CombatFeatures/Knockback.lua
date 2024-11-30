@@ -21,13 +21,13 @@ Knockback.Func = function(HitTab,CharConfig,Options)
 		local Mover = CharConfig.Mover
 		local AnimManager =  _G.Modules.Systems.AnimManager
 		HitTab.Lunge(CharConfig,{
-			BaseVel = 140,
+			BaseVel = 130,
 			VelocityTrack = 1/1.4,
-			TimeTake = .5
+			TimeTake = .25
 		})
 		local HitboxTimes,Anim = HitTab.PlayAnim(CharConfig,{
 			Type = "M2",
-			Speed = 1.9
+			Speed = 3
 		})
 		HitTab.ResetAnims(CharConfig,"All")
 	local Controller=  CharConfig.Controller

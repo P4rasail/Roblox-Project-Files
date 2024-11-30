@@ -1,5 +1,4 @@
 [tools]
-moonwave = { npm = "moonwave", version = "latest" }
 rojo = { github = "rojo-rbx/rojo", version = "7.4.4" }
 selene = { github = "Kampfkarren/selene", version = "0.27.0" }
 stylua = { github = "JohnnyMorganz/StyLua", version = "2.0.1" }

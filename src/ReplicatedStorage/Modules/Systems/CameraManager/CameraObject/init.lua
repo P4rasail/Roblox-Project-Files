@@ -7,7 +7,7 @@ local CameraObject = {
 	Zoom = 10,
 	TargZoom = 10,
 	MaxZoom = NumberRange.new(5,40),
-	VelocityDivide = 24,
+	VelocityDivide = 48,
 	Enabled = true,
 	Type = "Normal",
 	Offset = CFrame.new(0,.7,1),
@@ -165,7 +165,7 @@ local function ParentConnected()
 			return -Cam.CFrame:VectorToObjectSpace(primaryPart.AssemblyLinearVelocity)/CameraObject.VelocityDivide
 		end
 		local function GetFOV(PrimPart:BasePart)
-			return 70 + math.clamp(PrimPart.AssemblyLinearVelocity.Magnitude/10,0,70)
+			return 70 + math.clamp(PrimPart.AssemblyLinearVelocity.Magnitude/5 - 60,0,70)
 		end
 
 		table.insert(CameraObject.Events,RunService.PreRender:Connect(function(deltaTime)

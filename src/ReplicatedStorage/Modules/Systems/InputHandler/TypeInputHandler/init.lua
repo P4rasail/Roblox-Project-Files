@@ -18,9 +18,9 @@ function CheckAlign(InputData,TypeEntry,EntryID,Holdable,Config)
 	end
 	local TabPressed = TypeInputHandler.Pressed[EntryID]
 local EnactedPressed = false
-	for i,Input in pairs(InputData) do
+	for i,Input in ipairs(InputData) do
 		
-		if table.find(Input.Enacted,EntryID) and not Config.MultiKeyActivation then
+		if table.find(Input.Enacted,EntryID) then
 			EnactedPressed = true
 			if Holdable then 
 				--print(EntryID) 
@@ -50,6 +50,7 @@ local EnactedPressed = false
 			
 			if AmountMet >= AmountTimesNeeded then
 				--TabPressed[TypeEntry.Data.Value].Amount = 0
+				--print(Input,EntryID)
 				table.insert(Input.Enacted,EntryID)
 				TabPressed[TypeEntry.Data.Value] = nil
 				return true,InputsUsed
@@ -88,21 +89,26 @@ local EnactedPressed = false
 return false,{}
 end
 
-function TypeInputHandler:GetAllInputs(TypeEntries,InputData)
+function TypeInputHandler:GetAllInputs(TypeEntries,InputData,EntryID)
 	local ValidData = {}
 	for a,x in InputData do
 		local Found = false
-	for i,v in TypeEntries do
+	for i,v in ipairs(TypeEntries) do
 		if v[1] then
-			local TempData = TypeInputHandler:GetAllInputs(v,InputData)
-			for e,r in TempData do
+			local TempData = TypeInputHandler:GetAllInputs(v,InputData,EntryID)
+			if EntryID == "Hit" then
+				print(TempData,EntryID)
+				end
+			for e,r in ipairs(TempData) do
 				if not table.find(ValidData,r) then
 					table.insert(ValidData,r)
 				end
 			end
 		else
-			--print(x,v)
-			if v.Data and v.Data.Value == x.Value then
+			if EntryID == "Hit" then
+			--print(x.Enacted,EntryID)
+			end
+			if v.Data and v.Data.Value == x.Value or table.find(x.Enacted,EntryID) then
 				if not table.find(ValidData,x) then
 				table.insert(ValidData,x)
 				break
@@ -113,6 +119,9 @@ function TypeInputHandler:GetAllInputs(TypeEntries,InputData)
 	end
 	
 	end
+	if EntryID == "Hit" then
+		--print(ValidData,EntryID)
+		end
 	return ValidData
 end
 
