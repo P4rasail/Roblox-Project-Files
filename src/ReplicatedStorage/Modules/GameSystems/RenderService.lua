@@ -104,6 +104,31 @@ if not RenderService.Running then
 			end]]
 
 		end
+
+		function RenderService:BindFace(Char:Model,OutfitType)
+			local Targ:Model
+			if OutfitType then
+				Targ = Models.Faces:FindFirstChild(OutfitType)
+			end
+			for i,v in Char.Head:GetChildren() do
+				if v:IsA("Decal") then
+					v:Destroy()
+				end
+			end
+			local Bound = _G.Modules.GameSystems.BindService:Bind(Targ,Char,{
+				Tag = "Face",
+				Unbind = not Targ
+			})
+			--[[
+			for i,v:MeshPart in Bound.Model:GetDescendants() do
+				if v:IsA("MeshPart") then
+					Indexes.Modules.Systems.ShaderSystem:HookObject(v,{
+						Tones = 2
+					})
+				end
+			end]]
+
+		end
 		function RenderService:BindHair(Char:Model,HairType,Form)
 			local Targ:Model
 			if HairType then

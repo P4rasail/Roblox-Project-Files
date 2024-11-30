@@ -40,6 +40,7 @@ function CharAdded(Player:Player,Char:Model)
 		
 	end
 	Indexes.Modules.GameSystems.RenderService:BindOutfit(Char,"Goku")
+	Indexes.Modules.GameSystems.RenderService:BindFace(Char,"Goku")
 	Indexes.Modules.GameSystems.RenderService:BindHair(Char,"male 7")
 	if Player then
 		local Hum:Humanoid = Char:WaitForChild("Humanoid")

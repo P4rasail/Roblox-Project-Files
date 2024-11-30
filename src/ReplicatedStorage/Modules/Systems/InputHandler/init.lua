@@ -71,7 +71,7 @@ function CompareInputs(Entry1,Entry2)
 	end
 end
 local function BranchValidify(Branch,InputInfo)
-	--print(Branch,InputInfo)
+	------print(Branch,InputInfo)
 	if Branch.TypeInputs then
 		Branch = Branch.TypeInputs
 	end
@@ -80,7 +80,7 @@ local function BranchValidify(Branch,InputInfo)
 	for i,v in Branch do
 		if typeof(v) ~= "table" then return end
 		if v.Data then
-			--print(InputInfo)
+			------print(InputInfo)
 			local Result = CompareInputs(v.Data,InputInfo)
 			if Result then
 				return true end
@@ -96,18 +96,18 @@ local ValidifyInput = function(InputInfo,Entries)
 	local Indexes = require(game:GetService("ReplicatedStorage"):WaitForChild("Indexes"))
 
 	_G.WaitUntil("IndexesLoaded")
-	--print(ClientManager)
-	--print(InputInfo)
+	------print(ClientManager)
+	------print(InputInfo)
 	local IsMet =  BranchValidify(Entries,InputInfo)
-	--print(IsMet)
+	------print(IsMet)
 	return IsMet
 			--[[for a,k in ClientManager.Config do
 				for i,v in k.TypeInputs do
-					--print(v)
-					--print(InputInfo)
+					------print(v)
+					------print(InputInfo)
 					if CompareInputs(v.Data,InputInfo) then
-						--print(v)
-						--print(InputInfo)
+						------print(v)
+						------print(InputInfo)
 						return true
 					end
 				end
@@ -116,12 +116,11 @@ end
 
 Indexes:OnLoad(function()
 	
-	--print("THERE")
+	------print("THERE")
 	local AtOnce = 0
 	function InputHandler:Verify(InputData,CharConfig,Configs,ActionsDone)
 
 		if not CharConfig then return end
---print(CharConfig)
 
 		CharConfig.Inputs.CurrentInputs = InputData
 		local Entries = {}
@@ -138,49 +137,63 @@ Indexes:OnLoad(function()
 		for e,x in pairs(Configs) do
 			
 
-			--print("TESTING THE NUTS OF ",x.Action)
-			--print(x)
-			--print(InputData)
+			------print("TESTING THE NUTS OF ",x.Action)
+			------print(x)
+			------print(InputData)
 			local Clone = table.clone(InputData)
-			--print(InputData,Clone)
-			local InputData2 = TypeInputHandler:GetAllInputs(x.TypeInputs,Clone)
-			--print(x.Action,InputData,InputData2)--,Result)
+			------print(InputData,Clone)
+			local InputData2 = TypeInputHandler:GetAllInputs(x.TypeInputs,Clone,x.Action)
+			------print(x.Action,InputData,InputData2)--,Result)
 			for i,v in InputData2 do
 				if not v["Enacted"] then
 					v.Enacted = {}
 				end
 			end
+			if #InputData2 == 0 then continue end
 			local Result,InputsUsed = TypeInputHandler:Check(InputData2,x.TypeInputs,x.Action,x.Holdable,{
 				MultiKeyActivation = x.MultiKeyActivation
 			}) 
 			
-			--print(InputData,x.Action,x,Result,InputsUsed)
+			------print(InputData,x.Action,x,Result,InputsUsed)
 			
-			--print(Result)
+			------print(Result)
+			--print(InputsUsed)
+			for i,v in InputsUsed do
+				--print(x,v)
+				if v.Release and x.Holdable then
+					--if v.Holdable then
+						local Args = x.Args or {}
+						Args = table.clone(Args)
+						Args.Holding = false
+						CharConfig:DoAction(x.Action,Args)
+						
+					--end
+				else
+
+
+				if x.Value == v.Value then
+					InputData[e] = v
+					break
+				end
+				
+				end
+			end
 			if Result and Result ~= 2  then
-				--print("Added "..x.Action)
+				------print("Added "..x.Action)
 				if InputsUsed then
 				for i,v in InputsUsed do
 					table.insert(v.Enacted,x.Action)
 				end
-				for e,x in InputData do
-					for i,v in InputsUsed do
-						print(x,v)
-						if x.Value == v.Value then
-							InputData[e] = v
-							break
-						end
-					end
+				
 				end
-				end
-			--	print(InputData)
+			--	----print(InputData)
 				local Valid = true
 				local Conditionals = x.Conditionals or {}
 				local function SetCheck(InputData)
 					--table.insert(Input.Enacted,EntryID)
 					for i,v in InputData do
 						local Result2,InputsUsed = TypeInputHandler:Check({v},x.TypeInputs,x.Action)
-						print(v,x.Action,Result2)
+						----print(v,x.Action,Result2)
 						if Result2 and Result2 ~= 2 then
 							
 							--table.insert(v.Enacted,x.Action)
@@ -208,15 +221,15 @@ Indexes:OnLoad(function()
 						if v == "CurrentUser" then
 							Targ = CharConfig.Controller
 						end
-						--print(Targ)
+						------print(Targ)
 						if Object == "CharacterManager" then
 							Targ = Indexes.Modules.Systems.CharacterManager:GetController(Targ)
 							Targ = Targ and Targ.Data 	
 						end
-						--print(Targ)
+						------print(Targ)
 						if not Targ then Valid2 = false break end
 						Valid2 = _G.Check(Type,Targ)
-						--print(OleV)
+						------print(OleV)
 Valid2 = OleV.Not and not Valid2 or Valid2
 					end
 					if not Valid2 then
@@ -224,8 +237,8 @@ Valid2 = OleV.Not and not Valid2 or Valid2
 						break
 					end
 				end
-				--print(x.Action)
-				--print(Valid)
+				------print(x.Action)
+				------print(Valid)
 				if Valid then
 					for i,v in InputData do
 						
@@ -247,7 +260,7 @@ Valid2 = OleV.Not and not Valid2 or Valid2
 		for i,v in NotHolding do
 			local Found = table.find(InputData.ActionsDone,v.Action)
 			if Found then
-				--print(x)
+				------print(x)
 				table.remove(InputData.ActionsDone,Found)
 				local Args = v.Args or {}
 				table.clone(Args)
@@ -255,8 +268,8 @@ Valid2 = OleV.Not and not Valid2 or Valid2
 				CharConfig:DoAction(v.Action,Args)
 			end
 		end
-		--print(ClientManager.CurrentInputs)
-		--print(Entries)
+		------print(ClientManager.CurrentInputs)
+		------print(Entries)
 		
 		if #Entries == 0 then
 			table.clear(ActionsDone)
@@ -290,9 +303,9 @@ Valid2 = OleV.Not and not Valid2 or Valid2
 			local Priority2 = Entry1.Priority or 0
 			return Priority > Priority2
 		end)
-		--print(Entries)
+		------print(Entries)
 		for i,v in pairs(Entries) do
-			--print(v.Action)
+			------print(v.Action)
 			table.insert(InputData.ActionsDone,v.Action)
 			ActionsDone[v.Action] = true
 			local Args = v.Args or {}
@@ -303,30 +316,25 @@ Valid2 = OleV.Not and not Valid2 or Valid2
 		end
 	end
 	function InputHandler:AddInput(Input:InputObject,Add)
-
 		local Result = InputHandler.InputList[Input]
 		AtOnce = _G.Indexes.Modules.Util.Array:CountTable(InputHandler.InputList,{
 			NonRecursive = true
 		})
 		local Info
-		--print(Input.KeyCode.Name)
+		
+		------print(Input.KeyCode.Name)
 		if Input.UserInputType == Enum.UserInputType.Keyboard then
 			Info = _G.Enums.Key[Input.KeyCode.Name]
 		end
 		if string.find(Input.UserInputType.Name,"Mouse") then
 			Info = _G.Enums.Key[Input.UserInputType.Name]
 		end
-		--print(Info)
-
-
-		--print(AtOnce)
-		--print(InputHandler.Funcs)
 		for i,v in pairs(InputHandler.Funcs) do
 			task.spawn(function()
 				v.Call(Input,Add)
 			end)
 		end
-
+local Fired = false
 		if Add then
 
 			if Info then
@@ -358,37 +366,39 @@ Valid2 = OleV.Not and not Valid2 or Valid2
 
 		else
 			if Info then
-				--print(InputHandler.CurrentInputs)
+				------print(InputHandler.CurrentInputs)
 				for i,v in InputHandler.CurrentInputs do
-					--print(v,Info)
+					------print(v,Info)
 					if v.Value == Info.Value then
+						--if v.Holdable then
+							v.Release = true
+							local OleInput = InputHandler
+							Fired = true
+							--print(v)
+							OleInput:Verify(InputHandler.CurrentInputs,InputHandler.CharConfig,OleInput.Configs,InputHandler.ActionsDone)
+						--	end
 						table.remove(InputHandler.CurrentInputs,i)
 					end
 				end
-				--print(InputHandler.CurrentInputs)
+				------print(InputHandler.CurrentInputs)
 			end
 			if Result then
 				Result.Script:Destroy()
 			end
 			InputHandler.InputList[Input] = nil
 		end
-		
+		if not Fired then
 		script.Press:Fire()
+		
+		end
 	end
 	function InputHandler.AddInputExtra(self,Input,Add)
 		local OleInput  = InputHandler
 local InputHandler = self
---print(self)
+------print(self)
 		local Info
-		--print(Input.KeyCode.Name)
+		------print(Input.KeyCode.Name)
 		Info = _G.Enums.Key[Input]
-		--print(Info)
-
-
-		--print(AtOnce)
-		--print(InputHandler.Funcs)
-		
-
 		if Add then
 
 			if Info then
@@ -409,14 +419,19 @@ local InputHandler = self
 
 		else
 			if Info then
-				--print(InputHandler.CurrentInputs)
+				------print(InputHandler.CurrentInputs)
 				for i,v in InputHandler.CurrentInputs do
-					--print(v,Info)
+					------print(v,Info)
 					if v.Value == Info.Value then
+						if v.Holdable then
+						v.Release = true
+						OleInput:Verify(InputHandler.CurrentInputs,InputHandler.CharConfig,OleInput.Configs,InputHandler.ActionsDone)
+						end
 						table.remove(InputHandler.CurrentInputs,i)
+						break
 					end
 				end
-				--print(InputHandler.CurrentInputs)
+				------print(InputHandler.CurrentInputs)
 			end
 			
 		end

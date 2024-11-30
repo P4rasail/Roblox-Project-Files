@@ -4,7 +4,9 @@ function GetSize(Part:BasePart)
 		for i,v:SpecialMesh in Part:GetChildren() do
 			if v:IsA("SpecialMesh") then
 				if v.MeshType == Enum.MeshType.Head then
-					Size *= v.Scale / 1.25
+					Size *= v.Scale
+					local Min = math.min(Size.X,Size.Z)
+					Size = Vector3.new(Min,Size.Y,Min)
 				elseif v.MeshType == Enum.MeshType.FileMesh then
 					Size *= v.Scale / 100
 				else
