@@ -141,8 +141,20 @@ Indexes:OnLoad(function()
 			--print("TESTING THE NUTS OF ",x.Action)
 			--print(x)
 			--print(InputData)
+			local Clone = table.clone(InputData)
+			--print(InputData,Clone)
+			local InputData2 = TypeInputHandler:GetAllInputs(x.TypeInputs,Clone)
+			--print(x.Action,InputData,InputData2)--,Result)
+			for i,v in InputData2 do
+				if not v["Enacted"] then
+					v.Enacted = {}
+				end
+			end
+			local Result,InputsUsed = TypeInputHandler:Check(InputData2,x.TypeInputs,x.Action,x.Holdable,{
+				MultiKeyActivation = x.MultiKeyActivation
+			}) 
 			
-			local Result,InputsUsed = TypeInputHandler:Check(InputData,x.TypeInputs,x.Action,x.Holdable) 
+			--print(InputData,x.Action,x,Result,InputsUsed)
 			
 			--print(Result)
 			if Result and Result ~= 2  then
@@ -150,6 +162,15 @@ Indexes:OnLoad(function()
 				if InputsUsed then
 				for i,v in InputsUsed do
 					table.insert(v.Enacted,x.Action)
+				end
+				for e,x in InputData do
+					for i,v in InputsUsed do
+						print(x,v)
+						if x.Value == v.Value then
+							InputData[e] = v
+							break
+						end
+					end
 				end
 				end
 			--	print(InputData)
@@ -209,6 +230,7 @@ Valid2 = OleV.Not and not Valid2 or Valid2
 					for i,v in InputData do
 						
 						if BranchValidify(x,v) then
+							
 							if not table.find(v.Enacted,x.Action) then
 								table.insert(v.Enacted,x.Action)
 							end

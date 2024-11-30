@@ -88,6 +88,33 @@ local EnactedPressed = false
 return false,{}
 end
 
+function TypeInputHandler:GetAllInputs(TypeEntries,InputData)
+	local ValidData = {}
+	for a,x in InputData do
+		local Found = false
+	for i,v in TypeEntries do
+		if v[1] then
+			local TempData = TypeInputHandler:GetAllInputs(v,InputData)
+			for e,r in TempData do
+				if not table.find(ValidData,r) then
+					table.insert(ValidData,r)
+				end
+			end
+		else
+			--print(x,v)
+			if v.Data and v.Data.Value == x.Value then
+				if not table.find(ValidData,x) then
+				table.insert(ValidData,x)
+				break
+				
+				end
+			end
+		end
+	end
+	
+	end
+	return ValidData
+end
 
 function TypeInputHandler:Check(InputData,TypeEntries,ID,Holdable,Config)
 	Holdable = Holdable or TypeEntries.Holdable
@@ -112,7 +139,7 @@ function TypeInputHandler:Check(InputData,TypeEntries,ID,Holdable,Config)
 		Config.MultiKeyActivation = true
 	end
 	if not TypeEntries[1] then
-		print(InputData,TypeEntries,ID,Holdable)
+		--print(InputData,TypeEntries,ID,Holdable)
 		return CheckAlign(InputData,TypeEntries,ID,Holdable,Config)
 	else
 		local OliveBranch = false

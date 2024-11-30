@@ -433,7 +433,7 @@ end
 			if TypeAction == "DoAction" then
 				local Args = {...}
 				task.spawn(function()
-					print(CharConfig)
+					--print(CharConfig)
 				CharConfig:DoAction(unpack(Args))
 				end)
 				
